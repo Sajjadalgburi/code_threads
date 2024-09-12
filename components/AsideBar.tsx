@@ -7,6 +7,7 @@ import Image from "next/image";
 import NavItemButton from "./NavItems";
 import { usePathname } from "next/navigation";
 import { navItems } from "@/constants";
+import { ModeToggle } from "./ThemeSwitch";
 
 const AsideBar = () => {
   const pathname = usePathname();
@@ -56,6 +57,7 @@ const AsideBar = () => {
       </nav>
 
       <div className="bot">
+        <ModeToggle />
         <NavItemButton>
           <Menu size={32} />
         </NavItemButton>
