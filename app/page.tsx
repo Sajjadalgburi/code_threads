@@ -4,6 +4,7 @@ import React from "react";
 const page = () => {
   return (
     <main className="flex">
+      {/* Side bar for larger screens */}
       <AsideBar />
       <div className="container">
         <div className="wrapper">
