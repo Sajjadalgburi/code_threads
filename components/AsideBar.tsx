@@ -1,17 +1,20 @@
+"use client";
+
 import React from "react";
-import { User } from "lucide-react";
-import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
-import { Heart } from "lucide-react";
-import { House } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import NavItemButton from "./NavItems";
+import { usePathname } from "next/navigation";
+import { navItems } from "@/constants";
 
 const AsideBar = () => {
+  const pathname = usePathname();
+
   return (
     <aside className="aside-bar">
       <div className="top">
-        <Button className="hover:bg-slate-300/10 transition duration-300 px-5 py-3">
+        <NavItemButton>
           <Link href="/">
             <Image
               src="/app-logo.png"
@@ -21,29 +24,41 @@ const AsideBar = () => {
               className="filter invert"
             />
           </Link>
-        </Button>
+        </NavItemButton>{" "}
       </div>
 
-      {/* 
-    {/* TODO: Add a menu component to display some settings */}
-      <div className="mid">
-        <Button className="hover:bg-slate-300/10 transition duration-300 px-5 py-3">
-          <House size={32} />
-        </Button>{" "}
-        <Button className="hover:bg-slate-300/10 transition duration-300 px-5 py-3">
-          <Heart size={32} />
-        </Button>{" "}
-        <Button className="hover:bg-slate-300/10 transition duration-300 px-5 py-3">
-          <User size={32} />
-        </Button>{" "}
-      </div>
-      {/* 
-        TODO: Add a menu component to display some settings
-      */}
+      <nav className="mid">
+        {" "}
+        <ul className="sidebar-nav_elements">
+          {navItems.map((item) => {
+            const isActive: boolean = item.url === pathname;
+            return (
+              <li
+                key={item.id}
+                className={`${
+                  isActive
+                    ? "bg-purple-gradient text-white bg-slate-300/10 rounded-2xl"
+                    : "text-gray-500"
+                }`}
+              >
+                <NavItemButton>
+                  <Link href={item.url}>
+                    <span
+                      dangerouslySetInnerHTML={{ __html: item.logoSvg }}
+                      className={`${isActive && "brightness-200"}`}
+                    />{" "}
+                  </Link>
+                </NavItemButton>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
       <div className="bot">
-        <Button className="hover:bg-slate-300/10 transition duration-300 px-5 py-3">
+        <NavItemButton>
           <Menu size={32} />
-        </Button>
+        </NavItemButton>
       </div>
     </aside>
   );
