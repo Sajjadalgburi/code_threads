@@ -102,6 +102,9 @@ body {
     @apply flex text-center flex-col justify-between items-center max-w-2xl p-2 my-2;
   }
   .mid {
+    @apply flex flex-col items-center justify-center;
+  }
+  .sidebar-nav_elements {
     @apply flex flex-col items-center justify-center gap-6;
   }
 }
