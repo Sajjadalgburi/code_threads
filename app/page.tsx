@@ -1,12 +1,18 @@
-import { ModeToggle } from "@/components/ThemeSwitch";
+import AsideBar from "@/components/AsideBar";
 import React from "react";
 
 const page = () => {
   return (
-    <div>
-      <ModeToggle />
-      <h1>awdwd</h1>
-    </div>
+    <main className="flex">
+      <AsideBar />
+      <div className="container">
+        <div className="wrapper">
+          {" "}
+          <h1>Code Threads</h1>
+          <p>Share cool code snippets and interact with other developers!</p>
+        </div>
+      </div>
+    </main>
   );
 };
 
