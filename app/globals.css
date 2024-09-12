@@ -107,4 +107,7 @@ body {
   .sidebar-nav_elements {
     @apply flex flex-col items-center justify-center gap-6;
   }
+  .bot {
+    @apply flex flex-col items-center justify-center gap-6;
+  }
 }
