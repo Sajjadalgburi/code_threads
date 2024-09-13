@@ -10,12 +10,12 @@ const Page = () => {
       <AsideBar />
 
       {/* Main container centered with max-width */}
-      <div className="flex-1 max-w-6xl mx-auto w-full grid grid-cols-2 gap-4 p-4 h-full">
-        <div className="flex flex-col">
+      <div className="container">
+        <div className="flex-column">
           <Header title="For You" />
           <Feed>awad</Feed>
         </div>
-        <div className="flex flex-col">
+        <div className="flex-column">
           <Header title="Thread" />
           <Feed>hdadwa</Feed>
         </div>
