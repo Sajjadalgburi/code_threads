@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth from "next-auth/next";
 import { authOptions } from "@/lib/authOptions";
 import User from "@/lib/models/user.model";
@@ -38,8 +40,15 @@ export const handler = NextAuth({
       }
     },
 
+    // The `jwt` callback is called with the JSON Web Token/JWT (and the user) when a JWT is created (during sign in)
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+
     // The `session` object is the session that will be returned to the client
-    session({ session, token, user }) {
+    async session({ session, token, user }) {
+      // assign the token to be the user object
+      session.user = token as any;
       return session; // The return type will match the one returned in `useSession()`
     },
   },
