@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Provides a session context for the children components.
  *
