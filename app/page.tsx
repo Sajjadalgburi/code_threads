@@ -1,13 +1,18 @@
+"use client";
+
 import AsideBar from "@/components/AsideBar";
 import Feed from "@/components/Feed";
 import Header from "@/components/Header";
 import React from "react";
+import { signIn } from "next-auth/react";
 
 const Page = () => {
   return (
     <main className="flex h-screen">
       {/* Sidebar for larger screens */}
       <AsideBar />
+
+      <button onClick={() => signIn()}>click</button>
 
       {/* Main container centered with max-width */}
       <div className="container">
