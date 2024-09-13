@@ -8,7 +8,7 @@ import React from "react";
 
 const Header = ({ title }: { title: string }) => {
   return (
-    <div>
+    <div className="flex justify-center items-center m-2 p-2">
       <h1 className="capitalize font-semibold text-xl">{title}</h1>
     </div>
   );
