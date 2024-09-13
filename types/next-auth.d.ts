@@ -1,9 +1,25 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import nextAuth from "next-auth";
-import { IUser } from "@/interfaces";
+import NextAuth from "next-auth";
+import { JWT } from "next-auth/jwt";
 
+declare module "next-auth/jwt" {
+  /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
+  interface JWT {
+    /** OpenID ID Token */
+    idToken?: string;
+  }
+}
 declare module "next-auth" {
   interface Session {
-    user: IUser; // Use the IUser interface from the userSchema file
+    user: {
+      username: string;
+      email: string;
+      liked?: Schema.Types.ObjectId[];
+      image?: string;
+      followers?: Schema.Types.ObjectId[];
+      replies?: Schema.Types.ObjectId[];
+      threads?: Schema.Types.ObjectId[];
+      AccessToken: string;
+    };
   }
 }
