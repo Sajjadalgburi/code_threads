@@ -110,4 +110,8 @@ body {
   .bot {
     @apply flex flex-col items-center justify-center gap-6;
   }
+
+  .wrapper {
+    @apply flex justify-between gap-6 w-full;
+  }
 }
