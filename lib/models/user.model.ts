@@ -24,10 +24,12 @@ const userSchema = new Schema<IUser>(
       type: [Schema.Types.ObjectId],
       ref: "User",
     },
-    replies: {
-      type: [Schema.Types.ObjectId],
-      ref: "Thread",
-    },
+    replies: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Reply", // Reference the Reply model, not Thread
+      },
+    ],
     threads: [
       {
         type: Schema.Types.ObjectId,
