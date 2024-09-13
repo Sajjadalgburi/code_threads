@@ -20,3 +20,12 @@ export interface IThread extends Document {
   replies?: Schema.Types.ObjectId[]; // Array of reply IDs or Thread references
   user: Schema.Types.ObjectId;
 }
+
+// interface for the reply model/data
+export interface IReply extends Document {
+  text: string;
+  user: Schema.Types.ObjectId;
+  thread: Schema.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
