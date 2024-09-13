@@ -8,9 +8,11 @@ import NavItemButton from "./NavItems";
 import { usePathname } from "next/navigation";
 import { navItems } from "@/constants";
 import { ModeToggle } from "./ThemeSwitch";
+import { signOut, useSession } from "next-auth/react";
 
 const AsideBar = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   return (
     <aside className="aside-bar">
@@ -32,28 +34,35 @@ const AsideBar = () => {
       <nav className="mid">
         {" "}
         <ul className="sidebar-nav_elements">
-          {navItems.map((item) => {
-            const isActive: boolean = item.url === pathname;
-            return (
-              <li
-                key={item.id}
-                className={`${
-                  isActive
-                    ? "bg-purple-gradient text-white bg-slate-300/10 rounded-2xl"
-                    : "text-gray-500"
-                }`}
-              >
-                <NavItemButton>
-                  <Link href={item.url}>
-                    <span
-                      dangerouslySetInnerHTML={{ __html: item.logoSvg }}
-                      className={`${isActive && "brightness-200"}`}
-                    />{" "}
-                  </Link>
-                </NavItemButton>
-              </li>
-            );
-          })}
+          {session ? (
+            <>
+              {navItems.map((item) => {
+                const isActive: boolean = item.url === pathname;
+                return (
+                  <li
+                    key={item.id}
+                    className={`${
+                      isActive
+                        ? "bg-purple-gradient text-white bg-slate-300/10 rounded-2xl"
+                        : "text-gray-500"
+                    }`}
+                  >
+                    <NavItemButton>
+                      <Link href={item.url}>
+                        <span
+                          dangerouslySetInnerHTML={{ __html: item.logoSvg }}
+                          className={`${isActive ? "brightness-200" : ""}`}
+                        />{" "}
+                      </Link>
+                    </NavItemButton>
+                  </li>
+                );
+              })}
+              <button onClick={() => signOut()}>Logout</button>
+            </>
+          ) : (
+            <>Please log in</>
+          )}
         </ul>
       </nav>
 
