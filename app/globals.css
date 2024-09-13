@@ -110,8 +110,10 @@ body {
   .bot {
     @apply flex flex-col items-center justify-center gap-6;
   }
-
   .wrapper {
     @apply flex justify-center gap-5 w-full;
+  }
+  .feed {
+    @apply w-full max-w-2xl;
   }
 }
