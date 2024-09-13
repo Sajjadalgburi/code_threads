@@ -7,6 +7,7 @@ export interface IUser extends Document {
   username: string;
   email: string;
   liked?: Schema.Types.ObjectId[];
+  image?: string;
   followers?: Schema.Types.ObjectId[];
   replies?: Schema.Types.ObjectId[];
   threads?: Schema.Types.ObjectId[];
