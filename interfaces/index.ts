@@ -11,7 +11,7 @@ export interface IUser extends Document {
   followers?: Schema.Types.ObjectId[];
   replies?: Schema.Types.ObjectId[];
   threads?: Schema.Types.ObjectId[];
-  AccessToken?: any; // ! get back to this once it is figured out
+  AccessToken: string; // ! get back to this once it is figured out
 }
 
 // interface for the thread model/data
