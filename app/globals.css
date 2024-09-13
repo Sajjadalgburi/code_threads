@@ -96,7 +96,7 @@ body {
     @apply flex items-center justify-center;
   }
   .container {
-    @apply flex justify-center h-screen mx-auto w-full;
+    @apply flex-1 max-w-6xl mx-auto w-full grid grid-cols-2 gap-4 p-4 h-full;
   }
   .aside-bar {
     @apply flex text-center flex-col justify-between items-center max-w-2xl p-2 my-2;
@@ -110,10 +110,7 @@ body {
   .bot {
     @apply flex flex-col items-center justify-center gap-6;
   }
-  .wrapper {
-    @apply flex justify-center gap-5 w-full;
-  }
-  .feed {
-    @apply w-full max-w-2xl;
+  .flex-column {
+    @apply flex flex-col;
   }
 }
