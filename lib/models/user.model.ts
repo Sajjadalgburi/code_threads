@@ -24,6 +24,12 @@ const userSchema = new Schema<IUser>(
       type: [Schema.Types.ObjectId],
       ref: "User",
     },
+    // todo: add a real default image
+    image: {
+      type: String,
+      required: false,
+      default: "/app-logo.png",
+    },
     replies: [
       {
         type: Schema.Types.ObjectId,
