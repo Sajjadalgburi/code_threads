@@ -22,6 +22,7 @@ const AsideBar = () => {
               alt="logo"
               width={50}
               height={50}
+              priority={true} // {false} | {true}
               className="filter invert"
             />
           </Link>
