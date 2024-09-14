@@ -1,6 +1,6 @@
 "use client";
 
-import AsideBar from "@/components/AsideBar";
+import AsideBar from "@/components/SideBar/AsideBar";
 import Feed from "@/components/Feed";
 import Header from "@/components/Header";
 import React from "react";
