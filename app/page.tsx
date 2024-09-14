@@ -4,6 +4,7 @@ import AsideBar from "@/components/SideBar/AsideBar";
 import Feed from "@/components/Feed";
 import Header from "@/components/Header";
 import React from "react";
+import { AnimatedModal } from "@/components/Modal";
 
 const Page = () => {
   return (
@@ -14,9 +15,11 @@ const Page = () => {
       {/* Main container centered with max-width */}
       <div className="container">
         <div className="flex-column">
+          <AnimatedModal />
           <Header title="For You" />
           <Feed>awad</Feed>
         </div>
+
         <div className="flex-column">
           <Header title="Thread" />
           <Feed>hdadwa</Feed>
