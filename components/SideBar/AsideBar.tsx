@@ -4,10 +4,10 @@ import React from "react";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import NavItemButton from "./NavItems";
+import NavItemButton from "../NavItems";
 import { usePathname } from "next/navigation";
 import { navItems } from "@/constants";
-import { ModeToggle } from "./ThemeSwitch";
+import { ModeToggle } from "../ThemeSwitch";
 import { signOut, useSession } from "next-auth/react";
 
 const AsideBar = () => {
