@@ -1,8 +1,15 @@
 import { navItems } from "@/constants";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import NavItemButton from "../NavItems";
 import Link from "next/link";
+import LogoutBtn from "../buttons/LogoutBtn";
+
+/**
+ *
+ * todo: Add logic to show skimmer on the nav items if the session has not yet mounted
+ *
+ */
 
 const Nav_Aside = () => {
   const pathname = usePathname();
@@ -36,7 +43,7 @@ const Nav_Aside = () => {
                 </li>
               );
             })}
-            <button onClick={() => signOut()}>Logout</button>
+            <LogoutBtn />
           </>
         ) : (
           <>Please log in</>
