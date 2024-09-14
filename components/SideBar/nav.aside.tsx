@@ -1,9 +1,9 @@
 import { navItems } from "@/constants";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import NavItemButton from "../NavItems";
 import Link from "next/link";
-import LogoutBtn from "../buttons/LogoutBtn";
+import AuthButtons from "../buttons/AuthButtons";
 
 /**
  *
@@ -43,10 +43,10 @@ const Nav_Aside = () => {
                 </li>
               );
             })}
-            <LogoutBtn />
+            <AuthButtons isLogin={true} onClick={() => signOut()} />
           </>
         ) : (
-          <>Please log in</>
+          <AuthButtons isLogin={false} onClick={() => signIn()} />
         )}
       </ul>
     </nav>
