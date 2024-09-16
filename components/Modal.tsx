@@ -21,13 +21,18 @@ export function AnimatedModal() {
             <div className="bg-slate-500 w-[100px] h-[100px]"></div>
           </div>
 
-          <div className="flex justify-end mt-10">
-            <button className="px-2 py-1 bg-gray-200 text-black dark:bg-black dark:border-black dark:text-white border border-gray-300 rounded-md text-sm w-28">
-              Cancel
-            </button>
-            <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-black w-28">
-              Post
-            </button>
+          <div className="flex justify-between items-end mt-14">
+            <div className="flex justify-start">
+              <p className="text-gray-600 text-sm">Anyone can reply...</p>
+            </div>{" "}
+            <div className="flex gap-2">
+              <button className="px-2 py-1 bg-red-500 text-white dark:bg-red-500 dark:border-red-500 border border-red-500 rounded-md text-sm w-28">
+                Cancel
+              </button>
+              <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-black w-28">
+                Post
+              </button>
+            </div>
           </div>
         </ModalBody>
       </Modal>
