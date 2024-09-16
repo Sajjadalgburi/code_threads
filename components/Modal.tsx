@@ -3,6 +3,7 @@ import React from "react";
 import { Modal, ModalBody, ModalTrigger } from "./ui/animated-modal";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import ThreadForm from "./ThreadForm";
 
 export function AnimatedModal() {
   const { data: session } = useSession();
@@ -28,11 +29,11 @@ export function AnimatedModal() {
               height={40}
               className="rounded-full"
             />
-            <div>
-              <p className="text-sm dark:text-white font-semibold">
+            <div className="flex flex-col w-full flex-wrap">
+              <p className="text-md dark:text-white font-semibold">
                 {session?.user?.name}
               </p>
-              <input type="text" />
+              <ThreadForm />{" "}
             </div>
           </div>
 
@@ -41,7 +42,7 @@ export function AnimatedModal() {
             <div className="flex justify-start">
               <p className="text-gray-600 text-sm">Anyone can reply...</p>
             </div>{" "}
-            <div className="flex gap-2">
+            <div className="flex gap-2 ">
               <button className="px-2 py-1 bg-red-500 text-white dark:bg-red-500 dark:border-red-500 border border-red-500 rounded-md text-sm w-28">
                 Cancel
               </button>
