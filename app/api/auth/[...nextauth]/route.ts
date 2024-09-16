@@ -42,19 +42,22 @@ export const handler = NextAuth({
     },
 
     // The `jwt` callback is called with the JSON Web Token/JWT (and the user) when a JWT is created (during sign in)
-    async jwt({ token, user }) {
+    async jwt({ token, user, profile }) {
+      await connectToDatabase();
+
       // When user signs in for the first time, user object will be available
-      if (user) {
-        token.id = user.id; // Pass user.id to the JWT token
+      if (profile) {
+        const dbUser = await User.findOne({ email: profile.email });
+        token.id = dbUser?._id.toString(); // Pass MongoDB _id to the JWT token
       }
+
       return token;
     },
 
     // The `session` object is the session that will be returned to the client
-    async session({ session, token, user }) {
-      // assign the token to be the user object
-      session.user = token as any;
-      session.user.username = token.username as string; // Add username to session (optional)
+    async session({ session, token }) {
+      session.user.id = token.id as string; // Assign the MongoDB _id to the session
+      session.user.username = token.username as string;
       return session; // The return type will match the one returned in `useSession()`
     },
   },
