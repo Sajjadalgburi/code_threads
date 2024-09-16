@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vs2015 } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 import { Button } from "./ui/button";
 import { IThread } from "@/interfaces";
+import { useSession } from "next-auth/react";
 
 const ThreadForm = ({ action }: { action: string }) => {
   // Use State's
@@ -25,6 +26,39 @@ const ThreadForm = ({ action }: { action: string }) => {
     setCode(newCode);
     detectLanguage(newCode);
   };
+  const session = useSession();
+  // const userId = session?.data?.user?.email;
+
+  console.log(session);
+
+  // use Effect to make a post to api backend /api/thread/new
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       if (!userId) return console.error("User not found...");
+
+  //       const response = await fetch("/api/thread/new", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+
+  //         body: JSON.stringify({ text: code }),
+  //       });
+
+  //       if (response.ok) {
+  //         const data: IThread = await response.json();
+  //         console.log(data);
+  //       } else {
+  //         console.error("Failed to fetch data");
+  //       }
+  //     } catch (error) {
+  //       console.error(`${action} failed: `, error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [action, code, userId]);
 
   return (
     <>
