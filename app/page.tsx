@@ -5,7 +5,7 @@ import Feed from "@/components/Feed";
 import Header from "@/components/Header";
 import React from "react";
 import { useSession } from "next-auth/react";
-import { AnimatedModal } from "@/components/Modal";
+import { DefaultModal } from "@/components/Modal";
 
 const Page = () => {
   const session = useSession();
@@ -24,7 +24,7 @@ const Page = () => {
           <Feed>awad</Feed>
         </section>
 
-        <AnimatedModal />
+        <DefaultModal action="create" />
 
         {session?.data?.user ? (
           // User Profile Section
