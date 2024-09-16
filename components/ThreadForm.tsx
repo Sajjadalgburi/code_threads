@@ -1,31 +1,61 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vs2015 } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import hljs from "highlight.js";
+import "highlight.js/styles/github.css";
+import { Button } from "./ui/button";
 
 const ThreadForm = () => {
   const [thread, setThread] = useState<string>("");
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [code, setCode] = useState<any>(null);
+  const [code, setCode] = useState<string | null>("");
+  const [language, setLanguage] = useState<string>("");
+
+  // Detect the language of the code
+  const detectLanguage = (codeSnippet: string) => {
+    const detectedLanguage = hljs.highlightAuto(codeSnippet).language;
+    setLanguage(detectedLanguage || "plaintext"); // Fallback to plaintext if no language detected
+  };
+
+  // Update the code and detect language on change
+  const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newCode = e.target.value;
+    setCode(newCode);
+    detectLanguage(newCode);
+  };
 
   return (
-    <div className="flex flex-col gap-4">
-      {" "}
-      <input
-        minLength={3}
-        maxLength={100}
-        className="bg-red w-full text-sm min-h-[10px] text-white focus:outline-none resize-none rounded-md p-2 overflow-hidden"
-        placeholder="Start a thread..."
-        value={thread}
-        onChange={(e) => setThread(e.target.value)}
-      />
-      <textarea
-        minLength={3}
-        maxLength={512}
-        className="bg-red w-full text-sm min-h-[150px] text-white focus:outline-none resize-none rounded-md p-2 overflow-hidden"
-        placeholder="Start a thread..."
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-      />
-    </div>
+    <>
+      <div className="flex flex-col gap-4">
+        <input
+          minLength={3}
+          maxLength={100}
+          className="bg-red w-full text-sm min-h-[10px] text-white focus:outline-none resize-none rounded-md p-2 overflow-hidden"
+          placeholder="Start a thread..."
+          value={thread}
+          onChange={(e) => setThread(e.target.value)}
+        />
+        <textarea
+          minLength={3}
+          maxLength={512}
+          className="bg-red w-full text-sm min-h-[150px] text-white focus:outline-none resize-none rounded-md p-2 overflow-hidden"
+          placeholder="Paste your code snippet here..."
+          value={code || ""}
+          onChange={handleCodeChange}
+        />
+        {/* Render the code snippet with auto-detected language */}
+        {code && (
+          <SyntaxHighlighter language={language} style={vs2015} showLineNumbers>
+            {code}
+          </SyntaxHighlighter>
+        )}
+      </div>
+      <div className="flex justify-end gap-3 mt-10">
+        {" "}
+        <Button variant="secondary">Reset</Button>
+        <Button variant="destructive">Cancel</Button>
+        <Button variant="default">Post</Button>
+      </div>
+    </>
   );
 };
 
