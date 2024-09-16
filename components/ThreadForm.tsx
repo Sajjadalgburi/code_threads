@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vs2015 } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 import { Button } from "./ui/button";
+import { IThread } from "@/interfaces";
 
-const ThreadForm = () => {
+const ThreadForm = ({ action }: { action: string }) => {
+  // Use State's
   const [thread, setThread] = useState<string>("");
   const [code, setCode] = useState<string | null>("");
   const [language, setLanguage] = useState<string>("");
@@ -53,7 +56,10 @@ const ThreadForm = () => {
         {" "}
         <Button variant="secondary">Reset</Button>
         <Button variant="destructive">Cancel</Button>
-        <Button variant="default">Post</Button>
+        <Button variant="default">
+          {" "}
+          {action === "create" ? "Create" : "Edit"}
+        </Button>
       </div>
     </>
   );
