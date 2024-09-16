@@ -5,6 +5,7 @@ import { Schema, Document } from "mongoose";
  */
 export interface IUser extends Document {
   username: string;
+  name?: string;
   email: string;
   liked?: Schema.Types.ObjectId[];
   image?: string;
