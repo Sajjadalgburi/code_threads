@@ -22,4 +22,11 @@ declare module "next-auth" {
       AccessToken: string;
     };
   }
+
+  interface Profile {
+    name?: string | null;
+    email: string;
+    username: string;
+    picture?: string | null;
+  }
 }
