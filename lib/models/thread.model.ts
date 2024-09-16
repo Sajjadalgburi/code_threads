@@ -17,7 +17,7 @@ const threadSchema = new Schema<IThread>(
     text: {
       type: String,
       required: [true, "Text content for thread is required"],
-      minlength: 1, // Add validation to ensure threads have meaningful content
+      minlength: 3, // Add validation to ensure threads have meaningful content
     },
     views: {
       type: Number,
