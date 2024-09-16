@@ -38,7 +38,7 @@ export function AnimatedModal() {
           </div>
 
           {/* Modal Footer */}
-          <div className="flex justify-between items-end mt-14">
+          {/* <div className="flex justify-between items-end mt-14">
             <div className="flex justify-start">
               <p className="text-gray-600 text-sm">Anyone can reply...</p>
             </div>{" "}
@@ -50,7 +50,7 @@ export function AnimatedModal() {
                 Post
               </button>
             </div>
-          </div>
+          </div> */}
         </ModalBody>
       </Modal>
     </div>
