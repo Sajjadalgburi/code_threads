@@ -5,14 +5,17 @@ import { JWT } from "next-auth/jwt";
 declare module "next-auth/jwt" {
   /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
   interface JWT {
-    /** OpenID ID Token */
+    id?: string; // Include user ID in the JWT token
     idToken?: string;
+    username?: string; // Optionally add username to JWT
   }
 }
+
 declare module "next-auth" {
   interface Session {
     user: {
-      username: string;
+      id: string; // The user ID will be included in the session object
+      username: string; // Include username if necessary
       name?: string;
       email: string;
       liked?: Schema.Types.ObjectId[];
