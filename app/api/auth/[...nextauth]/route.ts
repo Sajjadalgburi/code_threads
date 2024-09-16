@@ -28,7 +28,8 @@ export const handler = NextAuth({
             username: profile?.name
               ?.replace(" ", "")
               .toLowerCase()
-              .trim() as string, // remove spaces and convert username to lowercase            image: profile?.image,
+              .trim() as string, // remove spaces and convert username to lowercase
+            image: profile?.picture,
           });
         }
 
