@@ -19,11 +19,13 @@ const threadSchema = new Schema<IThread>(
       required: [true, "Text content for thread is required"],
       minlength: 3, // Add validation to ensure threads have meaningful content
     },
+    code: {
+      type: String,
+    },
     views: {
       type: Number,
       default: 0,
     },
-
     // track users who liked the thread
     likes: [
       {
@@ -37,7 +39,6 @@ const threadSchema = new Schema<IThread>(
         ref: "Reply", // Assuming replies are threads or you can make a separate "Reply" model
       },
     ],
-
     // ! the user who created the thread.
     user: {
       type: Schema.Types.ObjectId,
