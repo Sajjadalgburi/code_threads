@@ -9,7 +9,6 @@ import { DefaultModal } from "@/components/Modal";
 
 const Page = () => {
   const session = useSession();
-  console.log(session);
 
   return (
     <main className="flex h-screen">
