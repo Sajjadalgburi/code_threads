@@ -18,6 +18,7 @@ export interface IUser extends Document {
 // interface for the thread model/data
 export interface IThread extends Document {
   text: string;
+  code?: string;
   views?: number;
   likes?: Schema.Types.ObjectId[]; // Array of user IDs
   replies?: Schema.Types.ObjectId[]; // Array of reply IDs or Thread references
