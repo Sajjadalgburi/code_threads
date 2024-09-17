@@ -2,7 +2,7 @@ import { connectToDatabase } from "@/lib/database/mongoose";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Thread from "@/lib/models/thread.model";
 import { NextRequest } from "next/server";
-import { redirect } from "next/navigation";
+import User from "@/lib/models/user.model";
 
 /**
  * Route to create a new thread.
@@ -22,18 +22,28 @@ export const POST = async (req: NextRequest) => {
     }
 
     const newThread = await Thread.create({
-      text: text,
-      code: code,
+      text,
+      code,
       user: userId,
     });
 
     if (!newThread) {
       return new Response("Failed to create a new thread", { status: 500 });
     }
-    await newThread.save();
-    setTimeout(() => {
-      redirect("/");
-    }, 1000);
+
+    // Update the user's threads array by adding the new thread's ID
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $push: { threads: newThread._id } },
+      { new: true }
+    );
+
+    if (!user) {
+      return new Response("Failed to update user with new thread", {
+        status: 500,
+      });
+    }
+
     return new Response("New thread created", { status: 200 });
   } catch (error) {
     console.error(error);
