@@ -7,18 +7,22 @@ import "highlight.js/styles/github.css";
 import { Button } from "./ui/button";
 import { IThread } from "@/interfaces";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const ThreadForm = ({ action }: { action: string }) => {
   // Use State's
   const [thread, setThread] = useState<string>("");
   const [code, setCode] = useState<string | null>("");
   const [language, setLanguage] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Detect the language of the code
   const detectLanguage = (codeSnippet: string) => {
     const detectedLanguage = hljs.highlightAuto(codeSnippet).language;
     setLanguage(detectedLanguage || "plaintext"); // Fallback to plaintext if no language detected
   };
+
+  const router = useRouter();
 
   // Update the code and detect language on change
   const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -63,6 +67,7 @@ const ThreadForm = ({ action }: { action: string }) => {
   const handleSubmit = async () => {
     try {
       if (!userId) return alert("User not found...");
+      setIsSubmitting(true);
 
       const response = await fetch("/api/thread/new", {
         method: "POST",
@@ -77,17 +82,32 @@ const ThreadForm = ({ action }: { action: string }) => {
       if (!response.ok) return alert("Failed to create a new thread");
 
       alert("Thread created successfully!");
-      setTimeout(() => {});
+      setThread("");
+      setCode("");
     } catch (error) {
       console.error(`${action} failed: `, error);
     } finally {
-      setThread("");
-      setCode("");
+      setIsSubmitting(false);
     }
   };
 
   const handleEdit = async () => {
     console.log("Editing thread...");
+  };
+
+  // Reset form values
+  const handleReset = () => {
+    setThread("");
+    setCode("");
+  };
+
+  const handleCancel = () => {
+    if (!router) return;
+    const hasConfirmed = confirm("Are you sure you want to discard changes?");
+
+    if (hasConfirmed) {
+      router.push("/profile");
+    }
   };
 
   return (
@@ -118,14 +138,30 @@ const ThreadForm = ({ action }: { action: string }) => {
       </div>
       <div className="flex justify-end gap-3 mt-10">
         {" "}
-        <Button variant="secondary">Reset</Button>
-        <Button variant="destructive">Cancel</Button>
+        <Button
+          variant="secondary"
+          onClick={handleReset}
+          disabled={isSubmitting}
+        >
+          Reset
+        </Button>{" "}
+        <Button onClick={handleCancel} variant="destructive">
+          Cancel
+        </Button>
         <Button
           onClick={action === "create" ? handleSubmit : handleEdit}
           variant="default"
+          type="submit"
+          disabled={isSubmitting || !thread}
+          className={`${
+            isSubmitting ? "cursor-crosshair opacity-50" : "cursor-pointer"
+          }`}
         >
-          {" "}
-          {action === "create" ? "Create" : "Edit"}
+          {isSubmitting
+            ? "Submitting..."
+            : action === "create"
+            ? "Create"
+            : "Edit"}
         </Button>
       </div>
     </>
