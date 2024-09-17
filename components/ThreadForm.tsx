@@ -26,37 +26,69 @@ const ThreadForm = ({ action }: { action: string }) => {
     setCode(newCode);
     detectLanguage(newCode);
   };
+
   const session = useSession();
   const userId = session?.data?.user.id;
 
   // use Effect to make a post to api backend /api/thread/new
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!userId) return console.error("User not found...");
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       if (!userId) return console.error("User not found...");
 
-        const response = await fetch("/api/thread/new", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+  //       const response = await fetch("/api/thread/new", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${userId}`,
+  //         },
 
-          body: JSON.stringify({ text: code }),
-        });
+  //         body: JSON.stringify({ text: code }),
+  //       });
 
-        if (response.ok) {
-          const data: IThread = await response.json();
-          console.log(data);
-        } else {
-          console.error("Failed to fetch data");
-        }
-      } catch (error) {
-        console.error(`${action} failed: `, error);
-      }
-    };
+  //       if (response.ok) {
+  //         const data: IThread = await response.json();
+  //         console.log(data);
+  //       } else {
+  //         console.error("Failed to fetch data");
+  //       }
+  //     } catch (error) {
+  //       console.error(`${action} failed: `, error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [action, code, userId]);
+  //   fetchData();
+  // }, [action, code, userId]);
+
+  const handleSubmit = async () => {
+    try {
+      if (!userId) return alert("User not found...");
+
+      const response = await fetch("/api/thread/new", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userId}`,
+        },
+
+        body: JSON.stringify({ text: thread, code: code }),
+      });
+
+      if (!response.ok) return alert("Failed to create a new thread");
+
+      alert("Thread created successfully!");
+      setTimeout(() => {});
+    } catch (error) {
+      console.error(`${action} failed: `, error);
+    } finally {
+      setThread("");
+      setCode("");
+    }
+  };
+
+  const handleEdit = async () => {
+    console.log("Editing thread...");
+  };
 
   return (
     <>
@@ -88,7 +120,10 @@ const ThreadForm = ({ action }: { action: string }) => {
         {" "}
         <Button variant="secondary">Reset</Button>
         <Button variant="destructive">Cancel</Button>
-        <Button variant="default">
+        <Button
+          onClick={action === "create" ? handleSubmit : handleEdit}
+          variant="default"
+        >
           {" "}
           {action === "create" ? "Create" : "Edit"}
         </Button>
