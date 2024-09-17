@@ -7,11 +7,11 @@ import { Profile, Account } from "next-auth";
 import { connectToDatabase } from "@/lib/database/mongoose";
 
 export const handler = NextAuth({
-  // passing the spread operator to pass all the options from the authOptions
   ...authOptions,
 
   callbacks: {
     signIn: async ({
+      account,
       profile,
     }: {
       account: Account | null;
@@ -33,7 +33,7 @@ export const handler = NextAuth({
           });
         }
 
-        // returning true if the user is signed in successfully
+        // Returning true if the user is signed in successfully
         return true;
       } catch (error) {
         console.error("Error signing in", error);
@@ -41,27 +41,32 @@ export const handler = NextAuth({
       }
     },
 
-    // The `jwt` callback is called with the JSON Web Token/JWT (and the user) when a JWT is created (during sign in)
-    async jwt({ token, user, profile }) {
+    // The `jwt` callback is responsible for generating the token
+    async jwt({ token, user }) {
       await connectToDatabase();
 
-      // When user signs in for the first time, user object will be available
-      if (profile) {
-        const dbUser = await User.findOne({ email: profile.email });
-        token.id = dbUser?._id.toString(); // Pass MongoDB _id to the JWT token
+      // If `user` is defined, use `user.email` to find the user in the database
+      if (user) {
+        const dbUser = await User.findOne({ email: user.email });
+
+        if (dbUser) {
+          token.id = dbUser._id.toString(); // Store the MongoDB _id in the token
+          token.username = dbUser.username; // Optionally store username in token
+        }
       }
 
       return token;
     },
 
-    // The `session` object is the session that will be returned to the client
+    // The `session` callback is responsible for returning the session to the client
     async session({ session, token }) {
-      session.user.id = token.id as string; // Assign the MongoDB _id to the session
-      session.user.username = token.username as string;
-      return session; // The return type will match the one returned in `useSession()`
+      session.user.id = token.id as string; // Use MongoDB _id from token
+      session.user.username = token.username as string; // Optionally assign username
+
+      return session;
     },
   },
 });
 
-// exporting the handler for the api route as both GET and POST
+// Exporting the handler for the API route as both GET and POST
 export { handler as GET, handler as POST };
