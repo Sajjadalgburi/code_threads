@@ -153,9 +153,6 @@ const ThreadForm = ({ action }: { action: string }) => {
           variant="default"
           type="submit"
           disabled={isSubmitting || !thread}
-          className={`${
-            isSubmitting ? "cursor-crosshair opacity-50" : "cursor-pointer"
-          }`}
         >
           {isSubmitting
             ? "Submitting..."
