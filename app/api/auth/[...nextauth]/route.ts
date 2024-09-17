@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/authOptions";
 import User from "@/lib/models/user.model";
 import { Profile, Account } from "next-auth";
 import { connectToDatabase } from "@/lib/database/mongoose";
+import { getUserByEmail } from "@/lib/helper";
 
 export const handler = NextAuth({
   ...authOptions,
@@ -42,29 +43,32 @@ export const handler = NextAuth({
     },
 
     // The `jwt` callback is responsible for generating the token
-    async jwt({ token, user }) {
-      await connectToDatabase();
-
-      // If `user` is defined, use `user.email` to find the user in the database
-      if (user) {
-        const dbUser = await User.findOne({ email: user.email });
-
-        if (dbUser) {
-          token.id = dbUser._id.toString(); // Store the MongoDB _id in the token
-          token.username = dbUser.username; // Optionally store username in token
-        }
+    jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = user?.id;
       }
-
       return token;
     },
 
     // The `session` callback is responsible for returning the session to the client
     async session({ session, token }) {
-      session.user.id = token.id as string; // Use MongoDB _id from token
-      session.user.username = token.username as string; // Optionally assign username
+      await connectToDatabase();
+
+      const dbUser = await getUserByEmail(session.user.email as string);
+
+      if (token && dbUser) {
+        session.user.id = dbUser._id.toString();
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
+        session.user.image = token.picture as string;
+      }
 
       return session;
     },
+  },
+  session: {
+    strategy: "jwt",
   },
 });
 
