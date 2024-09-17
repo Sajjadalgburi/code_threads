@@ -27,38 +27,36 @@ const ThreadForm = ({ action }: { action: string }) => {
     detectLanguage(newCode);
   };
   const session = useSession();
-  // const userId = session?.data?.user?.email;
-
-  console.log(session);
+  const userId = session?.data?.user.id;
 
   // use Effect to make a post to api backend /api/thread/new
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       if (!userId) return console.error("User not found...");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!userId) return console.error("User not found...");
 
-  //       const response = await fetch("/api/thread/new", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
+        const response = await fetch("/api/thread/new", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-  //         body: JSON.stringify({ text: code }),
-  //       });
+          body: JSON.stringify({ text: code }),
+        });
 
-  //       if (response.ok) {
-  //         const data: IThread = await response.json();
-  //         console.log(data);
-  //       } else {
-  //         console.error("Failed to fetch data");
-  //       }
-  //     } catch (error) {
-  //       console.error(`${action} failed: `, error);
-  //     }
-  //   };
+        if (response.ok) {
+          const data: IThread = await response.json();
+          console.log(data);
+        } else {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error(`${action} failed: `, error);
+      }
+    };
 
-  //   fetchData();
-  // }, [action, code, userId]);
+    fetchData();
+  }, [action, code, userId]);
 
   return (
     <>
