@@ -7,7 +7,7 @@ const ThreadCard = () => {
   const [liked, setLiked] = useState(false);
 
   const handleLiked = async () => {
-    setLiked(!liked);
+    setLiked((prev) => !prev);
   };
 
   return (
