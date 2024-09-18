@@ -38,7 +38,7 @@ const ThreadForm = ({ action }: { action: string }) => {
     try {
       setIsSubmitting(true);
 
-      const response = await fetch("/api/thread/new", {
+      const response = await fetch("/api/threads/new", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
