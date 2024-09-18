@@ -24,7 +24,7 @@ const Page = () => {
         {/* For You Section */}
         <section className="flex-column">
           <Header title="For You" />
-          <Feed>awad</Feed>
+          <Feed action="main_feed" />
         </section>
 
         {session?.user ? (
@@ -32,7 +32,7 @@ const Page = () => {
           <>
             <section className="flex-column relative">
               <Header title="Thread" />
-              <Feed>hdadwa</Feed>
+              <Feed action="profile_feed" />
             </section>
             <DefaultModal action="create" />
           </>
