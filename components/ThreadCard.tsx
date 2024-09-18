@@ -2,13 +2,20 @@ import React from "react";
 import Image from "next/image";
 import { MessageCircle, Heart } from "lucide-react";
 import { useState } from "react";
+import { IThread } from "@/interfaces";
 
-const ThreadCard = () => {
+interface ThreadCardProps {
+  threadData: IThread;
+}
+
+const ThreadCard: React.FC<ThreadCardProps> = ({ threadData }) => {
   const [liked, setLiked] = useState(false);
 
   const handleLiked = async () => {
     setLiked((prev) => !prev);
   };
+
+  console.log(threadData);
 
   return (
     <div className="bg-gray-200 dark:bg-transparent rounded-lg p-4 md:p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -34,7 +41,7 @@ const ThreadCard = () => {
 
           {/* Card Body */}
           <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 mb-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+            {threadData.text}{" "}
           </p>
 
           {/* Card Stats */}
@@ -49,12 +56,12 @@ const ThreadCard = () => {
             >
               <Heart fill={`${liked && "red"}`} size={20} />
               <p className="text-gray-600 dark:text-gray-400 hover:text-black">
-                22
+                {threadData.likes?.length}{" "}
               </p>
             </button>
             <button className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-black transition-colors duration-300">
               <MessageCircle size={20} />
-              <p>22</p>
+              {threadData.replies?.length}{" "}
             </button>
           </div>
         </div>
