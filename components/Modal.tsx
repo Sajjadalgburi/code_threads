@@ -13,9 +13,9 @@ export function DefaultModal({ action }: { action: string }) {
   if (status === "loading") return <div>Loading...</div>;
 
   return (
-    <div className="py-40 flex items-center justify-center">
+    <div className="absolute top-[90%] right-80">
       <Modal>
-        <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white flex justify-center group/modal-btn">
+        <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white">
           <span className="text-center">
             {action === "create" ? "Create" : "Edit"}
           </span>
