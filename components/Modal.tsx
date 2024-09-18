@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+
 import React from "react";
 import { Modal, ModalBody, ModalTrigger } from "./ui/animated-modal";
 import { useSession } from "next-auth/react";
@@ -7,7 +7,10 @@ import Image from "next/image";
 import ThreadForm from "./ThreadForm";
 
 export function DefaultModal({ action }: { action: string }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  // Check if the session is still loading
+  if (status === "loading") return <div>Loading...</div>;
 
   return (
     <div className="py-40 flex items-center justify-center">
@@ -38,7 +41,6 @@ export function DefaultModal({ action }: { action: string }) {
               </p>
             </div>
             <ThreadForm action={action} />{" "}
-            {/* Pass data to ThreadForm if needed */}
           </div>
         </ModalBody>
       </Modal>
