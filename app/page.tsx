@@ -8,7 +8,11 @@ import { useSession } from "next-auth/react";
 import { DefaultModal } from "@/components/Modal";
 
 const Page = () => {
-  const session = useSession();
+  const { data: session, status } = useSession();
+
+  // Check if the session is still loading
+  if (status === "loading") return <div>Loading...</div>;
+  // Handle cases where the user is not authenticated
 
   return (
     <main className="flex h-screen">
@@ -25,7 +29,7 @@ const Page = () => {
 
         <DefaultModal action="create" />
 
-        {session?.data?.user ? (
+        {session?.user ? (
           // User Profile Section
           <section className="flex-column">
             <Header title="Thread" />
