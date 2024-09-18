@@ -27,14 +27,15 @@ const Page = () => {
           <Feed>awad</Feed>
         </section>
 
-        <DefaultModal action="create" />
-
         {session?.user ? (
           // User Profile Section
-          <section className="flex-column">
-            <Header title="Thread" />
-            <Feed>hdadwa</Feed>
-          </section>
+          <>
+            <section className="flex-column relative">
+              <Header title="Thread" />
+              <Feed>hdadwa</Feed>
+            </section>
+            <DefaultModal action="create" />
+          </>
         ) : (
           /**
            * todo: find a skeleton loader for this section but still
