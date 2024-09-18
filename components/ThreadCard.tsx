@@ -18,15 +18,15 @@ const ThreadCard = () => {
       {/* rest of the content */}
       <div>
         {/* card header */}
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-center">
           {/* users name will be a link */}
-          <h4>username</h4>
-          <p>20h</p>
+          <h4 className="text-md md:text-lg font-bold">username</h4>
+          <p className=" text-gray-400 text-sm font-extralight">20h</p>
         </div>
 
         {/* card body */}
         <div className="my-2">
-          <p>
+          <p className="font-extralight text-xs md:text-sm tracking-wide">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
           </p>
         </div>
