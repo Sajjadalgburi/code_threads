@@ -2,7 +2,7 @@ import { connectToDatabase } from "@/lib/database/mongoose";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Thread from "@/lib/models/thread.model";
 import { NextRequest } from "next/server";
-import User from "@/lib/models/user.model";
+import { User } from "@/lib/models/user.model";
 
 /**
  * Route to create a new thread.

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth from "next-auth/next";
 import { authOptions } from "@/lib/authOptions";
-import User from "@/lib/models/user.model";
+import { User } from "@/lib/models/user.model";
 import { Profile, Account } from "next-auth";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import { getUserByEmail } from "@/lib/helper";

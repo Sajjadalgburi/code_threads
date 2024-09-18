@@ -1,5 +1,5 @@
-import User from "../models/user.model";
 import hljs from "highlight.js";
+import { User } from "@/lib/models/user.model";
 
 export const getUserByEmail = async (email: string) => {
   return await User.findOne({ email });
