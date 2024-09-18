@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import { MessageCircle } from "lucide-react";
+import { Heart } from "lucide-react";
 
 const ThreadCard = () => {
   return (
@@ -32,9 +34,21 @@ const ThreadCard = () => {
         </div>
 
         {/* card stats */}
-        <div className="flex gap-4">
-          <p>likes 10</p>
-          <p>comments 10</p>
+        <div className="flex">
+          <button className="hover:bg-slate-300/10 transition duration-300 px-3 py-2 rounded-3xl">
+            {" "}
+            <div className="flex justify-center items-center gap-1">
+              <Heart size={20} />
+              <p>22</p>
+            </div>
+          </button>
+          <button className="hover:bg-slate-300/10 transition duration-300 px-3 py-2 rounded-3xl">
+            {" "}
+            <div className="flex justify-center items-center gap-1">
+              <MessageCircle size={20} />
+              <p>22</p>
+            </div>
+          </button>
         </div>
       </div>
     </div>
