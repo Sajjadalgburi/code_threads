@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vs2015 } from "react-syntax-highlighter/dist/cjs/styles/hljs";
-import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 import { Button } from "./ui/button";
-import { IThread } from "@/interfaces";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { detectLanguage } from "@/lib/helper";
+import FormSubmit from "./buttons/FormSubmit";
+import hljs from "highlight.js";
 
 const ThreadForm = ({ action }: { action: string }) => {
   const [thread, setThread] = useState<string>("");
@@ -16,10 +16,16 @@ const ThreadForm = ({ action }: { action: string }) => {
   const [language, setLanguage] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const router = useRouter();
-  const session = useSession();
-  const userId = session?.data?.user.id;
+  const { data: session, status } = useSession();
+  const userId = session?.user?.id;
 
-  // Detect the language of the code
+  // Check if the session is still loading
+  if (status === "loading") return <div>Loading...</div>;
+
+  const detectLanguage = (codeSnippet: string): string => {
+    const detectedLanguage = hljs.highlightAuto(codeSnippet).language;
+    return detectedLanguage || "plaintext"; // Fallback to plaintext if no language detected
+  };
 
   // Update the code and detect language on change
   const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -30,7 +36,6 @@ const ThreadForm = ({ action }: { action: string }) => {
 
   const handleSubmit = async () => {
     try {
-      if (!userId) return alert("User not found...");
       setIsSubmitting(true);
 
       const response = await fetch("/api/thread/new", {
@@ -39,17 +44,17 @@ const ThreadForm = ({ action }: { action: string }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userId}`,
         },
-
-        body: JSON.stringify({ text: thread, code: code }),
+        body: JSON.stringify({ text: thread, code }),
       });
 
-      if (!response.ok) return alert("Failed to create a new thread");
+      if (!response.ok) throw new Error("Failed to create a new thread");
 
       alert("Thread created successfully!");
       setThread("");
       setCode("");
     } catch (error) {
       console.error(`${action} failed: `, error);
+      alert("Error creating thread");
     } finally {
       setIsSubmitting(false);
     }
@@ -66,9 +71,7 @@ const ThreadForm = ({ action }: { action: string }) => {
   };
 
   const handleCancel = () => {
-    if (!router) return;
     const hasConfirmed = confirm("Are you sure you want to discard changes?");
-
     if (hasConfirmed) {
       router.push("/profile");
     }
@@ -101,29 +104,23 @@ const ThreadForm = ({ action }: { action: string }) => {
         )}
       </div>
       <div className="flex justify-end gap-3 mt-10">
-        {" "}
         <Button
           variant="secondary"
           onClick={handleReset}
           disabled={isSubmitting}
         >
           Reset
-        </Button>{" "}
+        </Button>
         <Button onClick={handleCancel} variant="destructive">
           Cancel
         </Button>
-        <Button
-          onClick={action === "create" ? handleSubmit : handleEdit}
-          variant="default"
-          type="submit"
-          disabled={isSubmitting || !thread}
-        >
-          {isSubmitting
-            ? "Submitting..."
-            : action === "create"
-            ? "Create"
-            : "Edit"}
-        </Button>
+        <FormSubmit
+          action={action}
+          handleSubmit={handleSubmit}
+          handleEdit={handleEdit}
+          isSubmitting={isSubmitting}
+          thread={thread}
+        />
       </div>
     </>
   );
