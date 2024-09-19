@@ -23,6 +23,8 @@ export interface IThread extends Document {
   likes?: Schema.Types.ObjectId[]; // Array of user IDs
   replies?: Schema.Types.ObjectId[]; // Array of reply IDs or Thread references
   user: Schema.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // interface for the reply model/data
