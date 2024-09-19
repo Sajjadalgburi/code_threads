@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import React, { useState } from "react";
@@ -9,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import FormSubmit from "./buttons/FormSubmit";
 import hljs from "highlight.js";
+import { useModal } from "./ui/animated-modal";
 
 const ThreadForm = ({ action }: { action: string }) => {
   const [thread, setThread] = useState<string>("");
@@ -49,7 +51,6 @@ const ThreadForm = ({ action }: { action: string }) => {
 
       if (!response.ok) throw new Error("Failed to create a new thread");
 
-      alert("Thread created successfully!");
       setThread("");
       setCode("");
     } catch (error) {
@@ -57,6 +58,7 @@ const ThreadForm = ({ action }: { action: string }) => {
       alert("Error creating thread");
     } finally {
       setIsSubmitting(false);
+      setOpen(false);
     }
   };
 
@@ -76,6 +78,8 @@ const ThreadForm = ({ action }: { action: string }) => {
       router.push("/profile");
     }
   };
+
+  const { setOpen } = useModal();
 
   return (
     <>
