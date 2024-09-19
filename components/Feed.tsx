@@ -50,7 +50,9 @@ const Feed: React.FC<FeedProps> = ({ action }) => {
       {error && <p className="text-red-500">{error}</p>}
 
       {threads.length > 0 ? (
-        threads.map((t) => <ThreadCard key={t._id as string} threadData={t} />)
+        threads.map((t) => (
+          <ThreadCard key={t._id as string} action={action} threadData={t} />
+        ))
       ) : (
         <p>No threads available.</p>
       )}
