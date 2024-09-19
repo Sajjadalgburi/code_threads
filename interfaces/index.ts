@@ -15,6 +15,19 @@ export interface IUser extends Document {
   AccessToken: string; // ! get back to this once it is figured out
 }
 
+export interface UserInterface {
+  username: string;
+  name?: string;
+  _id: string;
+  email: string;
+  liked?: Schema.Types.ObjectId[];
+  image?: string;
+  followers?: Schema.Types.ObjectId[];
+  replies?: Schema.Types.ObjectId[];
+  threads?: Schema.Types.ObjectId[];
+  AccessToken: string; // ! get back to this once it is figured out
+}
+
 // interface for the thread model/data
 export interface IThread extends Document {
   text: string;
