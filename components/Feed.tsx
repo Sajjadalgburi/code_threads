@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { IThread } from "@/interfaces";
+import { IThread, UserInterface } from "@/interfaces";
 import ThreadCard from "./ThreadCard_Things/ThreadCard";
 
 interface FeedProps {
@@ -13,37 +13,44 @@ const Feed: React.FC<FeedProps> = ({ action }) => {
   const { data: session } = useSession();
   const userId = session?.user?.id;
 
-  const [threads, setThreads] = useState<IThread[]>([]); // Changed to array
-  const [error, setError] = useState<string | null>(null); // Error state
+  const [threads, setThreads] = useState<IThread[]>([]);
+  const [users, setUsers] = useState<UserInterface[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchThreads = async () => {
+    const fetchData = async () => {
       try {
-        let url = "/api/thread";
-
+        // Fetch threads based on action and userId
+        let threadUrl = "/api/thread";
         if (action === "profile_feed" && userId) {
-          // fetch users threads only if the action is profile_feed
-          url = `/api/users/${userId}/threads`;
+          threadUrl = `/api/users/${userId}/threads`;
         }
 
-        const res = await fetch(url);
-
-        if (!res.ok) {
+        // Fetch threads
+        const threadRes = await fetch(threadUrl);
+        if (!threadRes.ok) {
           throw new Error("Failed to fetch threads");
         }
+        const threadData = await threadRes.json();
+        setThreads(threadData);
 
-        const data = await res.json();
-        setThreads(data); // Set array of threads
+        // Fetch users
+        const userRes = await fetch("/api/users");
+        if (!userRes.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        const userData = await userRes.json();
+        setUsers(userData);
       } catch (error) {
         console.error(error);
-        setError("Failed to load threads");
+        setError("Failed to load data");
       }
     };
 
     if (action === "main_feed" || (action === "profile_feed" && userId)) {
-      fetchThreads(); // Fetch for both feeds with conditions
+      fetchData();
     }
-  }, [action, userId]); // Depend on action and userId
+  }, [action, userId]);
 
   return (
     <div className="bg-[#181818] border p-8 rounded-3xl h-full overflow-auto">
@@ -51,7 +58,12 @@ const Feed: React.FC<FeedProps> = ({ action }) => {
 
       {threads.length > 0 ? (
         threads.map((t) => (
-          <ThreadCard key={t._id as string} action={action} threadData={t} />
+          <ThreadCard
+            key={t._id as string}
+            users={users}
+            action={action}
+            threadData={t}
+          />
         ))
       ) : (
         <p>No threads available.</p>
