@@ -22,7 +22,8 @@ const Feed: React.FC<FeedProps> = ({ action }) => {
         let url = "/api/thread";
 
         if (action === "profile_feed" && userId) {
-          url = `/api/thread?userId=${userId}`;
+          // fetch users threads only if the action is profile_feed
+          url = `/api/users/${userId}/threads`;
         }
 
         const res = await fetch(url);
