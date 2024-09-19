@@ -111,6 +111,24 @@ body {
     @apply flex flex-col items-center justify-center gap-6;
   }
   .flex-column {
-    @apply flex flex-col;
+    @apply flex flex-col overflow-auto;
+
+    /* ===== Scrollbar CSS ===== */
+    scrollbar-width: thin;
+    scrollbar-color: #79747b transparent;
+
+    /* Chrome, Edge, Safari */
+    &::-webkit-scrollbar {
+      width: 2px; /* Slim width */
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent; /* Transparent track */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #79747b;
+      border-radius: 20px; /* Rounded thumb */
+    }
   }
 }
