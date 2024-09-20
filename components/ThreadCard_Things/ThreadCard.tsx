@@ -10,18 +10,40 @@ interface ThreadCardProps {
   threadData: IThread;
   action: "main_feed" | "profile_feed";
   users: UserInterface[];
+  currentUser: string;
 }
 
 const ThreadCard: React.FC<ThreadCardProps> = ({
   threadData,
   users,
   action = "main_feed",
+  currentUser,
 }) => {
-  const [liked, setLiked] = useState<boolean>(false);
   const [comment, setComment] = useState<boolean>(false);
 
+  const [likedCss, setLikedCss] = useState<boolean>(false);
+  const [liked, setLiked] = useState<number>(threadData.likes?.length || 0);
+
   const handleLiked = async () => {
-    setLiked((prev) => !prev);
+    setLikedCss((prev) => !prev); // will be used to change the color of the heart icon
+    try {
+      const isLiked = !likedCss;
+      setLiked((prev) => (isLiked ? prev + 1 : prev - 1));
+
+      const response = await fetch(`/api/thread/one/${threadData._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isLiked, userId: currentUser }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to like thread");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleComment = async () => {
@@ -30,9 +52,6 @@ const ThreadCard: React.FC<ThreadCardProps> = ({
 
   // Format createdAt to relative time (e.g., '20h ago')
   const formattedTime = moment(threadData.createdAt).fromNow();
-
-  console.log(users);
-  console.log(threadData);
 
   return (
     <div className="bg-gray-200 dark:bg-transparent rounded-lg p-4 md:p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -74,8 +93,8 @@ const ThreadCard: React.FC<ThreadCardProps> = ({
             {/* Likes */}
             <StatButtons
               handleClick={handleLiked}
-              stat={threadData.likes?.length || 0}
-              clicked={liked}
+              stat={liked}
+              clicked={likedCss}
               fill="red"
               Logo={Heart}
             />
