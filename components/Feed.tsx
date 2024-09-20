@@ -59,6 +59,7 @@ const Feed: React.FC<FeedProps> = ({ action }) => {
       {threads.length > 0 ? (
         threads.map((t) => (
           <ThreadCard
+            currentUser={userId as string}
             key={t._id as string}
             users={users}
             action={action}
