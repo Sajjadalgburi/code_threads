@@ -58,7 +58,7 @@ const ThreadCard: React.FC<ThreadCardProps> = ({
   return (
     <div className="bg-gray-200 rounded-xl dark:bg-neutral-800 p-4 md:p-6 shadow-md hover:shadow-lg transition-shadow transform duration-500 ease-in-out">
       <div className="flex items-start space-x-4">
-        <Link href={`/user/${threadData.user}`} className="relative">
+        <Link href={`/user/?userId=${threadData.user}`} className="relative">
           <Image
             src={
               users.find(
@@ -80,7 +80,7 @@ const ThreadCard: React.FC<ThreadCardProps> = ({
         <div className="flex-1">
           {/* Card Header */}
           <div className="flex items-center justify-between mb-2">
-            <Link href={`/user/${threadData.user}`}>
+            <Link href={`/user/?userId=${threadData.user}`}>
               <h4 className="text-md md:text-lg font-bold text-black dark:text-white hover:underline">
                 {action === "profile_feed"
                   ? "You"
