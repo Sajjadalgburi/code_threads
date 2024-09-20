@@ -5,6 +5,8 @@ import { useState } from "react";
 import { IThread, UserInterface } from "@/interfaces";
 import moment from "moment"; // for formatting the date
 import StatButtons from "./StatButtons";
+import Link from "next/link";
+import { Plus } from "lucide-react";
 
 interface ThreadCardProps {
   threadData: IThread;
@@ -54,19 +56,26 @@ const ThreadCard: React.FC<ThreadCardProps> = ({
   const formattedTime = moment(threadData.createdAt).fromNow();
 
   return (
-    <div className="bg-gray-200 dark:bg-transparent rounded-lg p-4 md:p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+    <div className="bg-gray-200 rounded-xl dark:bg-neutral-800 p-4 md:p-6 shadow-md hover:shadow-lg transition-shadow transform duration-500 ease-in-out">
       <div className="flex items-start space-x-4">
-        <Image
-          src={
-            users.find(
-              (u) => (u._id as string) === (threadData.user as unknown)
-            )?.image || "/default-avatar.jpg"
-          }
-          alt="user profile"
-          width={50}
-          height={50}
-          className="rounded-full"
-        />
+        <Link href={`/user/${threadData.user}`} className="relative">
+          <Image
+            src={
+              users.find(
+                (u) => (u._id as string) === (threadData.user as unknown)
+              )?.image || "/default-avatar.jpg"
+            }
+            alt="user profile"
+            width={50}
+            height={50}
+            className="rounded-full cursor-pointer"
+          />
+          <Plus
+            className="absolute bottom-1 right-1 bg-white rounded-full transition-transform duration-300 ease-in-out transform hover:scale-125"
+            size={17}
+            color="black"
+          />
+        </Link>
 
         <div className="flex-1">
           {/* Card Header */}
