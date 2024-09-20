@@ -21,7 +21,7 @@ const StatButtons: React.FC<StatButtonsProps> = ({
       className={`flex items-center space-x-2 ${
         clicked === false
           ? "text-gray-600 dark:text-gray-400"
-          : `text-${fill}-600`
+          : `text-transparent`
       } transition-colors duration-300`}
     >
       <Logo fill={`${clicked ? fill : "none"}`} width={20} height={20} />
