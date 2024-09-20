@@ -53,6 +53,7 @@ const ThreadForm = ({ action }: { action: string }) => {
 
       setThread("");
       setCode("");
+      router.replace("/profile"); // todo! : this implementation isnt very optimized per say...
     } catch (error) {
       console.error(`${action} failed: `, error);
       alert("Error creating thread");
