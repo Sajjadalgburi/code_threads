@@ -41,6 +41,11 @@ const userSchema = new Schema<IUser>(
         ref: "Thread",
       },
     ],
+    bio: {
+      type: String,
+      required: false,
+      maxlength: 160,
+    },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );
