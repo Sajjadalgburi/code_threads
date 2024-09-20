@@ -80,13 +80,15 @@ const ThreadCard: React.FC<ThreadCardProps> = ({
         <div className="flex-1">
           {/* Card Header */}
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-md md:text-lg font-bold text-black dark:text-white">
-              {action === "profile_feed"
-                ? "You"
-                : users.find(
-                    (u) => (u._id as string) === (threadData.user as unknown)
-                  )?.username || "Unknown"}
-            </h4>
+            <Link href={`/user/${threadData.user}`}>
+              <h4 className="text-md md:text-lg font-bold text-black dark:text-white hover:underline">
+                {action === "profile_feed"
+                  ? "You"
+                  : users.find(
+                      (u) => (u._id as string) === (threadData.user as unknown)
+                    )?.username || "Unknown"}
+              </h4>
+            </Link>
             <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm">
               {formattedTime}
             </p>
