@@ -7,6 +7,7 @@ export interface IUser extends Document {
   username: string;
   name?: string;
   email: string;
+  bio?: string;
   liked?: Schema.Types.ObjectId[];
   image?: string;
   followers?: Schema.Types.ObjectId[];
@@ -20,6 +21,7 @@ export interface UserInterface {
   name?: string;
   _id: string;
   email: string;
+  bio?: string;
   liked?: Schema.Types.ObjectId[];
   image?: string;
   followers?: Schema.Types.ObjectId[];
