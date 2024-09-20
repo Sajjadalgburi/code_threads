@@ -36,7 +36,7 @@ const Nav_Aside = () => {
                     <Link
                       href={
                         item.id === 3
-                          ? `/user/${session?.user?.id}`
+                          ? `/user/?userId=${session?.user?.id}`
                           : (item.url as string)
                       }
                     >
