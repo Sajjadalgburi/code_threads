@@ -33,7 +33,13 @@ const Nav_Aside = () => {
                   }`}
                 >
                   <NavItemButton>
-                    <Link href={item.url}>
+                    <Link
+                      href={
+                        item.id === 3
+                          ? `/user/${session?.user?.id}`
+                          : (item.url as string)
+                      }
+                    >
                       <span
                         dangerouslySetInnerHTML={{ __html: item.logoSvg }}
                         className={`${isActive ? "brightness-200" : ""}`}
