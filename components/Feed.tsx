@@ -53,14 +53,14 @@ const Feed: React.FC<FeedProps> = ({ action }) => {
   }, [action, userId]);
 
   return (
-    <div className="bg-[#181818] border p-8 rounded-3xl h-full overflow-auto">
+    <div className="dark:bg-[#181818] p-2 border rounded-3xl h-full space-y-2 overflow-auto">
       {error && <p className="text-red-500">{error}</p>}
 
       {threads.length > 0 ? (
         threads.map((t) => (
           <ThreadCard
-            currentUser={userId as string}
             key={t._id as string}
+            currentUser={userId as string}
             users={users}
             action={action}
             threadData={t}
